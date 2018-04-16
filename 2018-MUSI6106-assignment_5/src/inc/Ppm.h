@@ -11,7 +11,7 @@ public:
     static Error_t destroyInstance (CPpm*& pCPpm);
 	Error_t CPpm::initInstance(float fSampleRateInHz, int iNumChannels);
     Error_t process (float **ppfInputBuffer, float *ppfOutputBuff, int iNumberOfFrames);
-
+	Error_t reset();
 protected:
     CPpm ();
     virtual ~CPpm ();
