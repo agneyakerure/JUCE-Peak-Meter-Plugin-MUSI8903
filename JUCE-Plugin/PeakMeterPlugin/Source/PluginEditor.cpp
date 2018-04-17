@@ -59,6 +59,5 @@ void PeakMeterPluginAudioProcessorEditor::timerCallback() {
     m_pPeakMeterCh1.setPMValue(processor.getMaxPeakMeterValue(0));
     m_pPeakMeterCh2.setPMValue(processor.getMaxPeakMeterValue(1));
     
-    
 }
 

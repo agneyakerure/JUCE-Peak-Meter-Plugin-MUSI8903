@@ -36,6 +36,8 @@ CPpm::CPpm()
     m_fSampleRate = 0.0f;
     m_iNumChannels = 0;
     m_epsilon = 1.0f * exp(-5.0f);
+    m_tempBuff = 0;
+    m_vppmMax = 0;
 
 }
 
@@ -73,7 +75,9 @@ Error_t CPpm::initInstance(float fSampleRateInHz, int iNumChannels)
 
 Error_t CPpm::process(float **ppfInputBuffer, float *ppfOutputBuff, int iNumberOfFrames)
 {
-
+    for(int i=0; i< m_iNumChannels; i++) {
+        m_vppmMax[i] = 0;
+    }
     for (int i = 0; i < m_iNumChannels; i++)
     {
         for (int j = 0; j < iNumberOfFrames; j++) {
@@ -93,7 +97,7 @@ Error_t CPpm::process(float **ppfInputBuffer, float *ppfOutputBuff, int iNumberO
             }
 
         }
-        cout << m_vppmMax[i] << "\n";
+        //cout << m_vppmMax[i] << "\n";
     }
 
     for (int i = 0; i < m_iNumChannels; i++)
@@ -101,8 +105,8 @@ Error_t CPpm::process(float **ppfInputBuffer, float *ppfOutputBuff, int iNumberO
         if (m_vppmMax[i] < m_epsilon) {
             m_vppmMax[i] = m_epsilon;
       }
-        cout << m_vppmMax[i] << "\n";
-        m_vppmMax[i] = 20 * log10(m_vppmMax[i]);
+        //cout << m_vppmMax[i] << "\n";
+        //m_vppmMax[i] = 20 * log10(m_vppmMax[i]);
         ppfOutputBuff[i] = m_vppmMax[i];
     }
 

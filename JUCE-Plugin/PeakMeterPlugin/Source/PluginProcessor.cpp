@@ -11,6 +11,9 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
+#include <iostream>
+using namespace std;
+
 //==============================================================================
 PeakMeterPluginAudioProcessor::PeakMeterPluginAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -213,13 +216,16 @@ void PeakMeterPluginAudioProcessor::setStateInformation (const void* data, int s
 
 float PeakMeterPluginAudioProcessor::getMaxPeakMeterValue(int channel)
 {
-    int iMaxPpmValue = 0;
-    if (m_fmaxPpmValue[channel] == 0) {
+    float iMaxPpmValue = 0;
+    if (m_fmaxPpmValue[channel] == 0)
+    {
         iMaxPpmValue = m_fPpmValue[channel];
     }
-    else {
+    else
+    {
         iMaxPpmValue = m_fmaxPpmValue[channel];
         m_fmaxPpmValue[channel] = 0;
+
     }
     return iMaxPpmValue;
 }

@@ -12,6 +12,9 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
+#include <iostream>
+using namespace std;
+
 //==============================================================================
 /*
 */
@@ -46,7 +49,8 @@ public:
             int position_y = getHeight() * (-m_fPeakMeterValueindB/12);
             int width = getWidth();
             int height = getHeight() - position_y;
-            g.fillRect(position_x, position_y, width, height);
+            float cornerSize = 2.0;
+            g.fillRoundedRectangle(position_x, position_y, width, height, cornerSize);
         }
     }
 
@@ -67,6 +71,8 @@ public:
         {
             m_fPeakMeterValueindB = 20*log10f(fPeakMeterValue);
         }
+        
+        //cout<<m_fPeakMeterValueindB<<endl;
         repaint();
     }
 
