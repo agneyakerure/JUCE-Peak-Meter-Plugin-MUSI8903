@@ -1,6 +1,11 @@
 #include "ErrorDef.h"
 #include "Ppm.h"
 #include <cmath>
+#include <iostream>
+
+
+using std::cout;
+using std::endl;
 
 Error_t CPpm::createInstance(CPpm *&pCPpm)
 {
@@ -25,14 +30,24 @@ Error_t CPpm::destroyInstance(CPpm *&pCPpm)
 
 CPpm::CPpm()
 {
-    this->reset();
+    //reset();
+    m_currentValue = 0.0f;
+    m_AlphaAT = 0.0f;
+    m_AlphaRT = 0.0f;
+    m_fSampleRate = 0.0f;
+    m_iNumChannels = 0;
     m_epsilon = 1.0f * exp(-5.0f);
 
 }
 
 CPpm::~CPpm()
 {
-    this->reset();
+    //reset();
+    delete[] m_tempBuff;
+    delete[] m_vppmMax;
+    m_tempBuff = 0;
+    m_vppmMax = 0;
+    //return kNoError;
 }
 
 Error_t CPpm::initInstance(float fSampleRateInHz, int iNumChannels)
@@ -71,13 +86,15 @@ Error_t CPpm::process(float **ppfInputBuffer, float *ppfOutputBuff, int iNumberO
             {
                 m_currentValue = m_AlphaAT * fabsf(ppfInputBuffer[i][j]) + (1 - m_AlphaAT)*m_tempBuff[i];
             }
-
+            
             m_tempBuff[i] = m_currentValue;
 
             if (m_currentValue > m_vppmMax[i]) {
                 m_vppmMax[i] = m_currentValue;
             }
+
         }
+        cout << m_vppmMax[i] << "\n";
     }
 
     for (int i = 0; i < m_iNumChannels; i++)
@@ -85,6 +102,7 @@ Error_t CPpm::process(float **ppfInputBuffer, float *ppfOutputBuff, int iNumberO
         if (m_vppmMax[i] < m_epsilon) {
             m_vppmMax[i] = m_epsilon;
       }
+        cout << m_vppmMax[i] << "\n";
         m_vppmMax[i] = 20 * log10(m_vppmMax[i]);
         ppfOutputBuff[i] = m_vppmMax[i];
     }
@@ -107,6 +125,7 @@ Error_t CPpm::reset()
     delete[] m_vppmMax;
     m_tempBuff = 0;
     m_vppmMax = 0;
+    return kNoError;
 }
 
 
