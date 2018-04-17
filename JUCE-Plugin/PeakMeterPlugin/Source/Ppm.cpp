@@ -1,4 +1,3 @@
-#include "ErrorDef.h"
 #include "Ppm.h"
 #include <cmath>
 #include <iostream>

@@ -31,6 +31,8 @@ PeakMeterPluginAudioProcessor::~PeakMeterPluginAudioProcessor()
 {
     CPpm::destroyInstance(m_pCPpm);
     m_pCPpm = NULL;
+    delete [] m_fPpmValue;
+    delete[] m_fmaxPpmValue;
 }
 
 //==============================================================================
@@ -106,7 +108,7 @@ void PeakMeterPluginAudioProcessor::prepareToPlay (double sampleRate, int sample
     m_iNumChannels = std::max(iTotalNumInputChannels, iTotalNumOutputChannels);
     
     m_pCPpm->initInstance(sampleRate, m_iNumChannels);
-    m_fPpmValue = new float [m_iNumChannels];
+    m_fPpmValue = new float[m_iNumChannels];
     m_fmaxPpmValue = new float[m_iNumChannels];
     for (int i = 0; i < m_iNumChannels; i++)
     {
@@ -166,13 +168,16 @@ void PeakMeterPluginAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mi
     // the samples and the outer loop is handling the channels.
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
+    
+    m_pCPpm->process((float **)buffer.getArrayOfReadPointers(), m_fPpmValue, buffer.getNumSamples());
+
+    
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
-        auto* channelData = buffer.getWritePointer (channel);
+        //auto* channelData = buffer.getWritePointer (channel);
 
         // ..do something to the data...
         
-        m_pCPpm->process((float **)buffer.getArrayOfReadPointers(), (float *)buffer.getArrayOfWritePointers(), buffer.getNumSamples());
         if (m_fPpmValue[channel] > m_fmaxPpmValue[channel])
             m_fmaxPpmValue[channel] = m_fPpmValue[channel];
     }

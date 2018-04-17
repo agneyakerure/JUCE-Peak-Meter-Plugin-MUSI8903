@@ -25,6 +25,7 @@ PeakMeterPluginAudioProcessorEditor::PeakMeterPluginAudioProcessorEditor (PeakMe
 
 PeakMeterPluginAudioProcessorEditor::~PeakMeterPluginAudioProcessorEditor()
 {
+
 }
 
 //==============================================================================

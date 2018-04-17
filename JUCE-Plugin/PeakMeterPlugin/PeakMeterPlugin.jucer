@@ -4,6 +4,8 @@
               jucerVersion="5.3.0">
   <MAINGROUP id="iO5G9i" name="PeakMeterPlugin">
     <GROUP id="{62357661-116A-258B-7D17-51A7037C1309}" name="Source">
+      <FILE id="vZCfiJ" name="MeterComponent.h" compile="0" resource="0"
+            file="Source/MeterComponent.h"/>
       <FILE id="tRttkW" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="YXbVEF" name="PluginProcessor.h" compile="0" resource="0"
@@ -14,8 +16,6 @@
     </GROUP>
     <FILE id="Cf5jCY" name="ErrorDef.h" compile="0" resource="0" file="Source/ErrorDef.h"/>
     <FILE id="gs2zNZ" name="Lfo.h" compile="0" resource="0" file="Source/Lfo.h"/>
-    <FILE id="d4x9z4" name="MeterComponent.h" compile="0" resource="0"
-          file="Source/MeterComponent.h"/>
     <FILE id="hXpiWD" name="Ppm.cpp" compile="1" resource="0" file="Source/Ppm.cpp"/>
     <FILE id="HzAvu1" name="Ppm.h" compile="0" resource="0" file="Source/Ppm.h"/>
     <FILE id="FUgwBn" name="RingBuffer.h" compile="0" resource="0" file="Source/RingBuffer.h"/>
