@@ -131,3 +131,14 @@ Error_t CPpm::reset()
     m_vppmMax = 0;
     return kNoError;
 }
+
+
+Error_t CPpm::setAlphaAT(float alphaATVal) {
+    m_AlphaAT = alphaATVal;
+    return kNoError;
+}
+
+Error_t CPpm::setAlphaRT(float alphaRTval) {
+    m_AlphaRT = alphaRTval;
+    return kNoError;
+}

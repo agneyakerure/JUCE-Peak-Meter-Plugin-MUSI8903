@@ -12,6 +12,8 @@ public:
     Error_t initInstance(float fSampleRateInHz, int iNumChannels);
     Error_t process (float **ppfInputBuffer, float *ppfOutputBuff, int iNumberOfFrames);
     Error_t reset();
+    Error_t setAlphaAT(float alphaATVal);
+    Error_t setAlphaRT(float alphaRTval);
 protected:
     CPpm ();
     virtual ~CPpm ();
