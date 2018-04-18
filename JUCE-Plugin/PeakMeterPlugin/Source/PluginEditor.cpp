@@ -39,6 +39,14 @@ void PeakMeterPluginAudioProcessorEditor::paint (Graphics& g)
 
     g.setColour (Colours::white);
     g.setFont (15.0f);
+    g.drawFittedText ("Peak Program Meter", 10, 2, 200, 20, Justification::left, 1);
+    g.drawFittedText("dB", 50, 200, 20, 20, Justification::left, 1);
+    g.drawFittedText("dB", 80, 200, 20, 20, Justification::left, 1);
+    g.drawFittedText("L", 55, 30, 20, 20, Justification::left, 1);
+    g.drawFittedText("R", 85, 30, 20, 20, Justification::left, 1);
+
+
+
 
 }
 
@@ -46,12 +54,9 @@ void PeakMeterPluginAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
-//    const int border = 120;
-//    m_pPeakMeterCh1.setBounds(border, 20, getWidth() - border, 20);
-//    m_pPeakMeterCh2.setBounds(border, 20, getWidth() - border, 50);
     
-    m_pPeakMeterCh1.setBounds(getWidth()/2 - 150, 50, 20, 150);
-    m_pPeakMeterCh2.setBounds(getWidth()/2 - 120, 50, 20, 150);
+    m_pPeakMeterCh1.setBounds(50, 50, 20, 150);
+    m_pPeakMeterCh2.setBounds(80, 50, 20, 150);
     
 }
 

@@ -66,7 +66,7 @@ private:
     
     CPpm *m_pCPpm = NULL;
     float* m_fPpmValue = 0;
-    float* m_fmaxPpmValue = 0;
+    float* m_fMaxPpmValue = 0;
     int m_iNumChannels = 0;
     
 };

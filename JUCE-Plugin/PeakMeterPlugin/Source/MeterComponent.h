@@ -44,13 +44,20 @@ public:
         g.fillAll(Colours::black);
         if (m_fPeakMeterValueindB > -12.0f)
         {
-            g.setColour(Colours::green);
+            if ( m_fPeakMeterValueindB > -2.0f)
+            {
+                g.setColour(Colours::red);
+            }
+            else
+            {
+                g.setColour(Colours::green);
+            }
             int position_x = 0;
             int position_y = getHeight() * (-m_fPeakMeterValueindB/12);
             int width = getWidth();
             int height = getHeight() - position_y;
             float cornerSize = 2.0;
-            g.fillRoundedRectangle(position_x, position_y, width, height, cornerSize);
+            g.fillRoundedRectangle(position_x , position_y, width , height , cornerSize);
         }
     }
 

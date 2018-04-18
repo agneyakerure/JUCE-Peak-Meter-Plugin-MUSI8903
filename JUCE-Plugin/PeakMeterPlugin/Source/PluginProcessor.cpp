@@ -35,7 +35,7 @@ PeakMeterPluginAudioProcessor::~PeakMeterPluginAudioProcessor()
     CPpm::destroyInstance(m_pCPpm);
     m_pCPpm = NULL;
     delete [] m_fPpmValue;
-    delete[] m_fmaxPpmValue;
+    delete[] m_fMaxPpmValue;
 }
 
 //==============================================================================
@@ -106,17 +106,14 @@ void PeakMeterPluginAudioProcessor::prepareToPlay (double sampleRate, int sample
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
     
-    const int iTotalNumInputChannels  = getTotalNumInputChannels();
-    const int iTotalNumOutputChannels = getTotalNumOutputChannels();
-    m_iNumChannels = std::max(iTotalNumInputChannels, iTotalNumOutputChannels);
-    
+    m_iNumChannels = getTotalNumInputChannels();
     m_pCPpm->initInstance(sampleRate, m_iNumChannels);
     m_fPpmValue = new float[m_iNumChannels];
-    m_fmaxPpmValue = new float[m_iNumChannels];
+    m_fMaxPpmValue = new float[m_iNumChannels];
     for (int i = 0; i < m_iNumChannels; i++)
     {
         m_fPpmValue[i] = 0;
-        m_fmaxPpmValue[i] = 0;
+        m_fMaxPpmValue[i] = 0;
     }
 }
 
@@ -172,7 +169,9 @@ void PeakMeterPluginAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mi
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
     
-    m_pCPpm->process((float **)buffer.getArrayOfReadPointers(), m_fPpmValue, buffer.getNumSamples());
+
+    
+
 
     
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
@@ -181,8 +180,17 @@ void PeakMeterPluginAudioProcessor::processBlock (AudioBuffer<float>& buffer, Mi
 
         // ..do something to the data...
         
-        if (m_fPpmValue[channel] > m_fmaxPpmValue[channel])
-            m_fmaxPpmValue[channel] = m_fPpmValue[channel];
+        //this is kind of ugly
+        //it suppose to process it channel by channel but our ppm takes
+        //two channel input
+        //so we kind of processing two channels twice to get ppm
+        //of each channel, but at least it works for two channels now
+        
+        m_pCPpm->process((float **)buffer.getArrayOfReadPointers(), m_fPpmValue, buffer.getNumSamples());
+
+        
+        if (m_fPpmValue[channel] > m_fMaxPpmValue[channel])
+            m_fMaxPpmValue[channel] = m_fPpmValue[channel];
     }
     
     
@@ -217,14 +225,14 @@ void PeakMeterPluginAudioProcessor::setStateInformation (const void* data, int s
 float PeakMeterPluginAudioProcessor::getMaxPeakMeterValue(int channel)
 {
     float iMaxPpmValue = 0;
-    if (m_fmaxPpmValue[channel] == 0)
+    if (m_fMaxPpmValue[channel] == 0)
     {
         iMaxPpmValue = m_fPpmValue[channel];
     }
     else
     {
-        iMaxPpmValue = m_fmaxPpmValue[channel];
-        m_fmaxPpmValue[channel] = 0;
+        iMaxPpmValue = m_fMaxPpmValue[channel];
+        m_fMaxPpmValue[channel] = 0;
 
     }
     return iMaxPpmValue;

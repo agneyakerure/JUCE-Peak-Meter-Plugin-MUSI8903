@@ -98,6 +98,7 @@ Error_t CPpm::process(float **ppfInputBuffer, float *ppfOutputBuff, int iNumberO
 
         }
         //cout << m_vppmMax[i] << "\n";
+
     }
 
     for (int i = 0; i < m_iNumChannels; i++)
