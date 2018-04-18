@@ -14,15 +14,15 @@
             file="Source/PluginEditor.cpp"/>
       <FILE id="m8wZge" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
-    <FILE id="Cf5jCY" name="ErrorDef.h" compile="0" resource="0" file="Source/ErrorDef.h"/>
-    <FILE id="gs2zNZ" name="Lfo.h" compile="0" resource="0" file="Source/Lfo.h"/>
-    <FILE id="hXpiWD" name="Ppm.cpp" compile="1" resource="0" file="Source/Ppm.cpp"/>
-    <FILE id="HzAvu1" name="Ppm.h" compile="0" resource="0" file="Source/Ppm.h"/>
-    <FILE id="FUgwBn" name="RingBuffer.h" compile="0" resource="0" file="Source/RingBuffer.h"/>
-    <FILE id="XZnGkC" name="Synthesis.h" compile="0" resource="0" file="Source/Synthesis.h"/>
-    <FILE id="sNXs5r" name="Util.h" compile="0" resource="0" file="Source/Util.h"/>
-    <FILE id="opwZ29" name="Vector.h" compile="0" resource="0" file="Source/Vector.h"/>
-    <FILE id="AbO3Kn" name="Vibrato.h" compile="0" resource="0" file="Source/Vibrato.h"/>
+    <FILE id="rq89oT" name="ErrorDef.h" compile="0" resource="0" file="Source/ErrorDef.h"/>
+    <FILE id="oFD5P4" name="Lfo.h" compile="0" resource="0" file="Source/Lfo.h"/>
+    <FILE id="tjGw1I" name="Ppm.cpp" compile="1" resource="0" file="Source/Ppm.cpp"/>
+    <FILE id="nH6d3B" name="Ppm.h" compile="0" resource="0" file="Source/Ppm.h"/>
+    <FILE id="xLcUwg" name="RingBuffer.h" compile="0" resource="0" file="Source/RingBuffer.h"/>
+    <FILE id="Jjv13B" name="Synthesis.h" compile="0" resource="0" file="Source/Synthesis.h"/>
+    <FILE id="M6xAp5" name="Util.h" compile="0" resource="0" file="Source/Util.h"/>
+    <FILE id="J3cxZ0" name="Vector.h" compile="0" resource="0" file="Source/Vector.h"/>
+    <FILE id="SxQ6tZ" name="Vibrato.h" compile="0" resource="0" file="Source/Vibrato.h"/>
   </MAINGROUP>
   <EXPORTFORMATS>
     <XCODE_MAC targetFolder="Builds/MacOSX">
