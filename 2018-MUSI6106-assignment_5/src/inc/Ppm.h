@@ -28,6 +28,7 @@ private:
 
 	float *m_tempBuff;
 	float *m_vppmMax;
+    bool m_isInitialized = false;
 
 };
 

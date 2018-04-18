@@ -30,7 +30,7 @@ SUITE(Ppm)
                     m_vppmMax(0)
         {
             CPpm::createInstance(m_pCPpm);
-            m_pCPpm->initInstance(m_fSampleRate, m_iNumChannels);
+            //m_pCPpm->initInstance(m_fSampleRate, m_iNumChannels);
             m_ppfInputData = new float*[m_iNumChannels];
             m_ppfOutputData = new float*[m_iNumChannels];
             m_ppfInputTmp = new float*[m_iNumChannels];
@@ -96,17 +96,16 @@ SUITE(Ppm)
     {
         Error_t err = kUnknownError;
         m_pCPpm->reset();
-        m_pCPpm->initInstance(m_fSampleRate, m_iNumChannels);
         err = m_pCPpm->process(m_ppfInputTmp, m_pfOutputTmp, 0);
-        CHECK (err == kNoError);
+        CHECK (err == kNotInitializedError);
     }
     
     
     TEST_FIXTURE(PpmData, ResetTest)
     {
         Error_t err = kUnknownError;
-        m_pCPpm->reset();
-        err = m_pCPpm->process(m_ppfInputTmp, m_pfOutputTmp, 0);
+        m_pCPpm->initInstance(m_fSampleRate, m_iNumChannels);
+        err = m_pCPpm->reset();
         CHECK (err == kNoError);
     }
     
