@@ -7,16 +7,16 @@
 class CPpm
 {
 public:
-    static Error_t createInstance (CPpm*& pCPpm);
-    static Error_t destroyInstance (CPpm*& pCPpm);
+    static Error_t createInstance(CPpm*& pCPpm);
+    static Error_t destroyInstance(CPpm*& pCPpm);
     Error_t initInstance(float fSampleRateInHz, int iNumChannels);
-    Error_t process (float **ppfInputBuffer, float *ppfOutputBuff, int iNumberOfFrames);
+    Error_t process(float **ppfInputBuffer, float *ppfOutputBuff, int iNumberOfFrames);
     Error_t reset();
     Error_t setAlphaAT(float alphaATVal);
     Error_t setAlphaRT(float alphaRTval);
 protected:
-    CPpm ();
-    virtual ~CPpm ();
+    CPpm();
+    virtual ~CPpm();
     
 private:
     float m_fSampleRate;
@@ -32,4 +32,3 @@ private:
 };
 
 #endif // #if !defined(__Ppm_hdr__)
-
