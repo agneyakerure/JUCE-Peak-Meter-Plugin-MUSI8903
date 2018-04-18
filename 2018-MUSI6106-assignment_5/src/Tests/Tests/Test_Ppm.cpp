@@ -110,7 +110,7 @@ SUITE(Ppm)
         CHECK (err == kNoError);
     }
     
-    TEST_FIXTURE(PpmData, ZeroInputSignal)
+    TEST_FIXTURE(PpmData, ZeroInput)
     {
         desierdResult = new float[m_iNumChannels];
         for (int i = 0; i < m_iNumChannels; i++)
@@ -126,7 +126,7 @@ SUITE(Ppm)
 
     }
     
-    TEST_FIXTURE(PpmData, PpmDCInput)
+    TEST_FIXTURE(PpmData, DCInput)
     {
         m_pCPpm->reset();
         m_pCPpm->initInstance(m_fSampleRate, m_iNumChannels);
@@ -135,7 +135,7 @@ SUITE(Ppm)
 
         for (int i = 0; i < m_iNumChannels; i++)
         {
-            CSynthesis::generateDc(m_ppfInputData[i], m_iDataLength, 1);
+            CSynthesis::generateDc(m_ppfInputData[i], m_iDataLength, 1.0F);
             desierdResult[i] = 1;
         }
         
@@ -144,8 +144,59 @@ SUITE(Ppm)
     }
     
     
-    
+    TEST_FIXTURE(PpmData, SineInput)
+    {
+        m_pCPpm->reset();
+        m_pCPpm->initInstance(m_fSampleRate, m_iNumChannels);
+        m_pCPpm->setAlphaAT(0.0);
+        desierdResult = new float[m_iNumChannels];
+        
+        for (int i = 0; i < m_iNumChannels; i++)
+        {
+            CSynthesis::generateSine(m_ppfInputData[i], 400 ,m_fSampleRate, m_iDataLength);
+            desierdResult[i] = 0;
+        }
+        
+        m_pCPpm->process(m_ppfInputData, m_pfOutputTmp, m_iDataLength);
+        CHECK_ARRAY_CLOSE(desierdResult, m_pfOutputTmp, m_iNumChannels, 1e-2);
+    }
    
+    
+    TEST_FIXTURE(PpmData, SquareInput)
+    {
+        m_pCPpm->reset();
+        m_pCPpm->initInstance(m_fSampleRate, m_iNumChannels);
+        m_pCPpm->setAlphaAT(1.0);
+        m_pCPpm->setAlphaRT(0.0);
+        desierdResult = new float[m_iNumChannels];
+        
+        for (int i = 0; i < m_iNumChannels; i++)
+        {
+            CSynthesis::generateRect(m_ppfInputData[i], 400 ,m_fSampleRate, m_iDataLength, 1.0F);
+            desierdResult[i] = 1;
+        }
+        
+        m_pCPpm->process(m_ppfInputData, m_pfOutputTmp, m_iDataLength);
+        CHECK_ARRAY_CLOSE(desierdResult, m_pfOutputTmp, m_iNumChannels, 1e-3);
+    }
+    
+    TEST_FIXTURE(PpmData, NoiseInput)
+    {
+        m_pCPpm->reset();
+        m_pCPpm->initInstance(m_fSampleRate, m_iNumChannels);
+        m_pCPpm->setAlphaAT(1.0);
+        m_pCPpm->setAlphaRT(1.0);
+        desierdResult = new float[m_iNumChannels];
+        
+        for (int i = 0; i < m_iNumChannels; i++)
+        {
+            CSynthesis::generateNoise(m_ppfInputData[i], m_iDataLength, 1.0F);
+            desierdResult[i] = 1;
+        }
+        
+        m_pCPpm->process(m_ppfInputData, m_pfOutputTmp, m_iDataLength);
+        CHECK_ARRAY_CLOSE(desierdResult, m_pfOutputTmp, m_iNumChannels, 1e-3);
+    }
 
 }
 
