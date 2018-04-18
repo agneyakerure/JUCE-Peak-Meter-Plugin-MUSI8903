@@ -84,6 +84,7 @@ SUITE(Ppm)
         int m_iNumChannels;
         int m_iDataLength;
         int m_iBlockLength;
+        
         float m_AlphaAT;
         float m_AlphaRT;
         float m_epsilon;
@@ -100,6 +101,30 @@ SUITE(Ppm)
         CPpm *m_pCPpm;
         
     };
+    
+    TEST_FIXTURE(PpmData, ZeroInputSignal)
+    {
+        m_pCPpm->reset();
+        m_pCPpm->initInstance(m_fSampleRate, m_iNumChannels);
+        process();
+        
+        for (int c = 0; c < m_iNumChannels; c++)
+        {
+            
+        }
+    }
+    
+    TEST_FIXTURE(PpmData, DCInputSignal)
+    {
+        m_pCPpm->reset();
+        m_pCPpm->initInstance(m_fSampleRate, m_iNumChannels);
+        process();
+        
+        for (int c = 0; c < m_iNumChannels; c++)
+        {
+            
+        }
+    }
 }
 
 #endif //WITH_TESTS

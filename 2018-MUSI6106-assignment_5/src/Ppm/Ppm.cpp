@@ -30,24 +30,22 @@ Error_t CPpm::destroyInstance(CPpm *&pCPpm)
 
 CPpm::CPpm()
 {
-    //reset();
-    m_currentValue = 0.0f;
-    m_AlphaAT = 0.0f;
-    m_AlphaRT = 0.0f;
-    m_fSampleRate = 0.0f;
-    m_iNumChannels = 0;
-    m_epsilon = 1.0f * exp(-5.0f);
+    reset();
+//    m_currentValue = 0.0f;
+//    m_AlphaAT = 0.0f;
+//    m_AlphaRT = 0.0f;
+//    m_fSampleRate = 0.0f;
+//    m_iNumChannels = 0;
+//    m_epsilon = 1.0f * exp(-5.0f);
 
 }
 
 CPpm::~CPpm()
 {
-    //reset();
     delete[] m_tempBuff;
     delete[] m_vppmMax;
     m_tempBuff = 0;
     m_vppmMax = 0;
-    //return kNoError;
 }
 
 Error_t CPpm::initInstance(float fSampleRateInHz, int iNumChannels)
@@ -107,8 +105,6 @@ Error_t CPpm::process(float **ppfInputBuffer, float *ppfOutputBuff, int iNumberO
         ppfOutputBuff[i] = m_vppmMax[i];
     }
 
-
-
     return kNoError;
 }
 
@@ -120,9 +116,6 @@ Error_t CPpm::reset()
     m_fSampleRate = 0.0f;
     m_iNumChannels = 0;
 
-
-    delete[] m_tempBuff;
-    delete[] m_vppmMax;
     m_tempBuff = 0;
     m_vppmMax = 0;
     return kNoError;
