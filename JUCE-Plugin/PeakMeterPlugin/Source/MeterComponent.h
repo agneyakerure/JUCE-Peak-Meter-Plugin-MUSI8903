@@ -52,12 +52,12 @@ public:
             {
                 g.setColour(Colours::green);
             }
-            int position_x = 0;
-            int position_y = getHeight() * (-m_fPeakMeterValueindB/12);
+            int x = 0;
+            int y = getHeight() * (-m_fPeakMeterValueindB/12);
             int width = getWidth();
-            int height = getHeight() - position_y;
+            int height = getHeight() - y;
             float cornerSize = 2.0;
-            g.fillRoundedRectangle(position_x , position_y, width , height , cornerSize);
+            g.fillRoundedRectangle(x , y, width , height , cornerSize);
         }
     }
 
