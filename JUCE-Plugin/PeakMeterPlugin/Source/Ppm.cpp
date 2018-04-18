@@ -47,6 +47,7 @@ CPpm::~CPpm()
 
 Error_t CPpm::initInstance(float fSampleRateInHz, int iNumChannels)
 {
+    m_isInitialized = true;
     m_fSampleRate = fSampleRateInHz;
     m_iNumChannels = iNumChannels;
     
@@ -69,39 +70,46 @@ Error_t CPpm::initInstance(float fSampleRateInHz, int iNumChannels)
 
 Error_t CPpm::process(float **ppfInputBuffer, float *ppfOutputBuff, int iNumberOfFrames)
 {
-    for(int i=0; i< m_iNumChannels; i++) {
-        m_vppmMax[i] = 0;
-    }
-    for (int i = 0; i < m_iNumChannels; i++)
+    if (!m_isInitialized)
     {
-        for (int j = 0; j < iNumberOfFrames; j++) {
-            if (m_tempBuff[i] > fabsf(ppfInputBuffer[i][j]))
-            {
-                m_currentValue = (1 - m_AlphaRT)*m_tempBuff[i];
-            }
-            else
-            {
-                m_currentValue = m_AlphaAT * fabsf(ppfInputBuffer[i][j]) + (1 - m_AlphaAT)*m_tempBuff[i];
-            }
-            
-            m_tempBuff[i] = m_currentValue;
-            
-            if (m_currentValue > m_vppmMax[i]) {
-                m_vppmMax[i] = m_currentValue;
-            }
-            
+        return kNotInitializedError;
+    }
+    else
+    {
+        for(int i=0; i< m_iNumChannels; i++) {
+            m_vppmMax[i] = 0;
         }
-    }
-    
-    for (int i = 0; i < m_iNumChannels; i++)
-    {
-        if (m_vppmMax[i] < m_epsilon) {
-            m_vppmMax[i] = m_epsilon;
+        for (int i = 0; i < m_iNumChannels; i++)
+        {
+            for (int j = 0; j < iNumberOfFrames; j++) {
+                if (m_tempBuff[i] > fabsf(ppfInputBuffer[i][j]))
+                {
+                    m_currentValue = (1 - m_AlphaRT)*m_tempBuff[i];
+                }
+                else
+                {
+                    m_currentValue = m_AlphaAT * fabsf(ppfInputBuffer[i][j]) + (1 - m_AlphaAT)*m_tempBuff[i];
+                }
+                
+                m_tempBuff[i] = m_currentValue;
+                
+                if (m_currentValue > m_vppmMax[i]) {
+                    m_vppmMax[i] = m_currentValue;
+                }
+                
+            }
         }
         
-        ppfOutputBuff[i] = m_vppmMax[i];
+        for (int i = 0; i < m_iNumChannels; i++)
+        {
+            if (m_vppmMax[i] < m_epsilon) {
+                m_vppmMax[i] = m_epsilon;
+            }
+            
+            ppfOutputBuff[i] = m_vppmMax[i];
+        }
+        return kNoError;
     }
-    return kNoError;
 }
 
 Error_t CPpm::reset()
@@ -129,3 +137,4 @@ Error_t CPpm::setAlphaRT(float alphaRTval) {
     m_AlphaRT = alphaRTval;
     return kNoError;
 }
+

@@ -28,7 +28,9 @@ private:
     
     float *m_tempBuff;
     float *m_vppmMax;
+    bool m_isInitialized = false;
     
 };
 
 #endif // #if !defined(__Ppm_hdr__)
+
