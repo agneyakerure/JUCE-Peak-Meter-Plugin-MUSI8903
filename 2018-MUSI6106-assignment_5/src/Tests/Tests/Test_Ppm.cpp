@@ -31,12 +31,16 @@ SUITE(Ppm)
             m_pCPpm->initInstance(m_fSampleRate, m_iNumChannels);
             m_ppfInputData = new float*[m_iNumChannels];
             m_ppfOutputData = new float*[m_iNumChannels];
-            m_ppfInputTmp = new float*[m_iNumChannels];
-            m_pfOutputTmp  = new float[m_iNumChannels];
+            //m_ppfInputTmp = new float*[m_iNumChannels];
+            //m_pfOutputTmp  = new float[m_iNumChannels];
             
             for(int i =  0; i < m_iNumChannels; i++)
             {
                 m_ppfInputData[i] = new float [m_iDataLength];
+                CVectorFloat::setZero(m_ppfInputData[i], m_iDataLength);
+                m_ppfOutputData[i] = new float [m_iDataLength];
+                CVectorFloat::setZero(m_ppfOutputData[i], m_iDataLength);
+
             }
         }
         
@@ -102,29 +106,39 @@ SUITE(Ppm)
         
     };
     
-    TEST_FIXTURE(PpmData, ZeroInputSignal)
+    TEST_FIXTURE(PpmData, InitializationTest)
     {
-        m_pCPpm->reset();
-        m_pCPpm->initInstance(m_fSampleRate, m_iNumChannels);
-        process();
+        Error_t err = kUnknownError;
         
-        for (int c = 0; c < m_iNumChannels; c++)
-        {
-            
-        }
+        m_pCPpm->reset ();
+        m_pCPpm->initInstance(m_fSampleRate, m_iNumChannels);
+        err = m_pCPpm->process(m_ppfInputTmp, m_pfOutputTmp, 0);
+        CHECK (err == kNoError);
     }
     
-    TEST_FIXTURE(PpmData, DCInputSignal)
-    {
-        m_pCPpm->reset();
-        m_pCPpm->initInstance(m_fSampleRate, m_iNumChannels);
-        process();
-        
-        for (int c = 0; c < m_iNumChannels; c++)
-        {
-            
-        }
-    }
+//    TEST_FIXTURE(PpmData, ZeroInputSignal)
+//    {
+//        m_pCPpm->reset();
+//        m_pCPpm->initInstance(m_fSampleRate, m_iNumChannels);
+//        process();
+//
+//        for (int c = 0; c < m_iNumChannels; c++)
+//        {
+//
+//        }
+//    }
+//
+//    TEST_FIXTURE(PpmData, DCInputSignal)
+//    {
+//        m_pCPpm->reset();
+//        m_pCPpm->initInstance(m_fSampleRate, m_iNumChannels);
+//        process();
+//
+//        for (int c = 0; c < m_iNumChannels; c++)
+//        {
+//
+//        }
+//    }
 }
 
 #endif //WITH_TESTS
